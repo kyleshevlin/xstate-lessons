@@ -2,7 +2,7 @@
 
 const { Machine } = require('xstate')
 
-const elevatorMachine = new Machine({
+const elevatorMachine = Machine({
   key: 'elevator',
   strict: true,
   initial: 'stop',
@@ -28,22 +28,17 @@ const elevatorMachine = new Machine({
   }
 })
 
-let currentElevatorState =
-  elevatorMachine.initialState
+let currentElevatorState = elevatorMachine.initialState
 
 function sendEvent(event) {
-  currentElevatorState = elevatorMachine.transition(
-    currentElevatorState,
-    event
-  )
+  currentElevatorState = elevatorMachine.transition(currentElevatorState, event)
 
-  console.log(
-    `Current State: ${currentElevatorState.value}`
-  )
+  console.log(`Current State: ${currentElevatorState.value}`)
 }
 
 sendEvent('UP')
 sendEvent('DOWN')
 sendEvent('STOP')
 
+// Will throw an error with `strict: true`
 sendEvent('FOO')
